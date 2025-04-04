@@ -1,0 +1,28 @@
+int x;
+float y;
+string s;
+bool b;
+
+x = 10;
+y = x + 2.5;
+s = "Hello";
+b = true;
+
+x = s;         // ❌ chyba: přiřazení string do int
+y = b;         // ❌ chyba: přiřazení bool do float
+s = x + 1;     // ❌ chyba: přiřazení čísla do string
+b = 5;         // ❌ chyba: int do bool
+
+z = 3;         // ❌ chyba: proměnná 'z' není deklarovaná
+
+x = 5 % 2.0;   // ❌ chyba: modulo pouze pro celá čísla
+
+if (x) {       // ❌ chyba: podmínka musí být typu bool
+  write x;
+}
+
+while ("text") { // ❌ chyba: podmínka musí být typu bool
+  write s;
+}
+
+s = s + 1;     // ❌ chyba: konkatenace jen mezi stringy

@@ -6,16 +6,16 @@ program: statement+ ;
 statement
     : primitiveType IDENTIFIER (',' IDENTIFIER)* ';' # declaration // var declaration
     | expr ';'                                       # printExpr
-    | read IDENTIFIER (',' IDENTIFIER)* ';'
-    | write expr (',' expr)* ';'
-    | { statement }
-    | if ( condition ) statement (else statement)?
-    | while ( condition ) statement
+    | READ_KEYWORD IDENTIFIER (',' IDENTIFIER)* ';'          # readExp
+    | WRITE_KEYWORD expr (',' expr)* ';'                     # writeExp
+    | '{' statement+ '}'                             # blockExp
+    | IF_KEYWORD ( condition ) statement (ELSE_KEYWORD statement)?   # ifElse
+    | WHILE_KEYWORD ( condition ) statement                  # whileLoop
     ;
 
 expr: expr op=(MUL|DIV) expr                # mulDiv
     | expr op=(ADD|SUB) expr                # addSub
-    | expr op=(MOD) expr                    # modulo
+    | expr op=MOD expr                    # modulo
     | op='-' expr                           # unaryMinus
     | op='!' expr                           # not
     | expr op='.' expr                      # concat
@@ -48,9 +48,16 @@ FLOAT_KEYWORD : 'float';
 BOOL_KEYWORD : 'bool';
 STRING_KEYWORD : 'string';
 
+READ_KEYWORD : 'read';
+WRITE_KEYWORD : 'write';
+IF_KEYWORD : 'if';
+ELSE_KEYWORD : 'else';
+WHILE_KEYWORD : 'while';
+
 SEMI:               ';';
 COMMA:              ',';
 
+// operators
 MUL : '*' ; 
 DIV : '/' ;
 ADD : '+' ;
