@@ -4,6 +4,7 @@ from exprLexer import exprLexer
 from exprParser import exprParser
 from exprListener import exprListener
 from exprVisitor import exprVisitor
+from antlr4.tree.Tree import ParseTreeWalker
 
 class EvalListener(exprListener):
     def __init__(self):
@@ -27,9 +28,29 @@ class EvalListener(exprListener):
         value = ctx.evaluate(ctx.expr())
         print(value)
 
-    def enterInt(self, ctx):
-        return int(ctx.getText())
+    def exitExpr(self, ctx):
+        if ctx.getChildCount() == 1:
+            if ctx.INT():
+                return int(ctx.INT().getText())
+            
+            elif ctx.FLOAT():
+                return float(ctx.FLOAT().getText())
+            
+            elif ctx.IDENTIFIER():
+                var_name = ctx.IDENTIFIER().getText()
+                return self.memory.get(var_name, 0)
+            
+        elif ctx.getChildCount() == 3:
+            left = self.evaluate(ctx.expr(0))
+            right = self.evaluate(ctx.expr(1))
+            op = ctx.getChild(1).getText()
 
+            if op == '+': return left+right
+            if op == '-': return left+right
+            if op == '*': return left+right
+            if op == '/': return left+right
+
+        return 0
 
         
 def main(argv):
@@ -37,11 +58,11 @@ def main(argv):
     lexer = exprLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = exprParser(stream)
-    tree = parser.prog()
+    tree = parser.statement()
 
-    #visitor = EvalVisitor()
-    #result = visitor.visit(tree)
-    #print(result)
+    listener = EvalListener()
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
 
 if __name__ == '__main__':
     main(sys.argv)
