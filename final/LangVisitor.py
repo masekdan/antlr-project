@@ -59,13 +59,13 @@ class LangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by LangParser#bool.
-    def visitBool(self, ctx:LangParser.BoolContext):
+    # Visit a parse tree produced by LangParser#string.
+    def visitString(self, ctx:LangParser.StringContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by LangParser#string.
-    def visitString(self, ctx:LangParser.StringContext):
+    # Visit a parse tree produced by LangParser#boolFalse.
+    def visitBoolFalse(self, ctx:LangParser.BoolFalseContext):
         return self.visitChildren(ctx)
 
 
@@ -101,6 +101,11 @@ class LangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by LangParser#not.
     def visitNot(self, ctx:LangParser.NotContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by LangParser#boolTrue.
+    def visitBoolTrue(self, ctx:LangParser.BoolTrueContext):
         return self.visitChildren(ctx)
 
 

@@ -25,7 +25,8 @@ expr: expr op=(MUL|DIV) expr                # mulDiv
     | IDENTIFIER                            # id
     | INT                                   # int
     | FLOAT                                 # float
-    | BOOL                                  # bool
+    | 'true'                                # boolTrue
+    | 'false'                               # boolFalse
     | STRING                                # string
     | '(' expr ')'                          # parens
     | <assoc=right> IDENTIFIER '=' expr     # assignment

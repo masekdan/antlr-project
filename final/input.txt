@@ -1,28 +1,24 @@
-int x;
-float y;
-string s;
-bool b;
+if (3<4) write "condition was true";
+else write "condition was false";
 
-x = 10;
-y = x + 2.5;
-s = "Hello";
-b = true;
-
-x = s;         // ❌ chyba: přiřazení string do int
-y = b;         // ❌ chyba: přiřazení bool do float
-s = x + 1;     // ❌ chyba: přiřazení čísla do string
-b = 5;         // ❌ chyba: int do bool
-
-z = 3;         // ❌ chyba: proměnná 'z' není deklarovaná
-
-x = 5 % 2.0;   // ❌ chyba: modulo pouze pro celá čísla
-
-if (x) {       // ❌ chyba: podmínka musí být typu bool
-  write x;
+if (true) {
+	write "inside";
+	write "second";
+	write "if";
 }
 
-while ("text") { // ❌ chyba: podmínka musí být typu bool
-  write s;
+int a,b;
+
+while(a<10) {
+ write "a=",a;
+ a=a+1;
 }
 
-s = s + 1;     // ❌ chyba: konkatenace jen mezi stringy
+a=0;
+
+read b;
+
+while(a<b) {
+ write "a=",a,", b=",b;
+ a=a+1;
+}

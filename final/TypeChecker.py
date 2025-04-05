@@ -52,7 +52,10 @@ class TypeChecker(LangVisitor):
     def visitFloat(self, ctx):
        return "float"
     
-    def visitBool(self, ctx):
+    def visitBoolTrue(self, ctx):
+       return "bool"
+    
+    def visitBoolFalse(self, ctx):
        return "bool"
     
     def visitString(self, ctx):
@@ -157,3 +160,4 @@ class TypeChecker(LangVisitor):
     def visitWriteExp(self, ctx):
        for e in ctx.expr():
           self.visit(e)
+          

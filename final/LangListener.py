@@ -98,21 +98,21 @@ class LangListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by LangParser#bool.
-    def enterBool(self, ctx:LangParser.BoolContext):
-        pass
-
-    # Exit a parse tree produced by LangParser#bool.
-    def exitBool(self, ctx:LangParser.BoolContext):
-        pass
-
-
     # Enter a parse tree produced by LangParser#string.
     def enterString(self, ctx:LangParser.StringContext):
         pass
 
     # Exit a parse tree produced by LangParser#string.
     def exitString(self, ctx:LangParser.StringContext):
+        pass
+
+
+    # Enter a parse tree produced by LangParser#boolFalse.
+    def enterBoolFalse(self, ctx:LangParser.BoolFalseContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#boolFalse.
+    def exitBoolFalse(self, ctx:LangParser.BoolFalseContext):
         pass
 
 
@@ -176,6 +176,15 @@ class LangListener(ParseTreeListener):
 
     # Exit a parse tree produced by LangParser#not.
     def exitNot(self, ctx:LangParser.NotContext):
+        pass
+
+
+    # Enter a parse tree produced by LangParser#boolTrue.
+    def enterBoolTrue(self, ctx:LangParser.BoolTrueContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#boolTrue.
+    def exitBoolTrue(self, ctx:LangParser.BoolTrueContext):
         pass
 
 
