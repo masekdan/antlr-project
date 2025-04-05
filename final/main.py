@@ -2,7 +2,8 @@ import sys
 from antlr4 import *
 from LangLexer import LangLexer
 from LangParser import LangParser
-from TypeChecker import TypeChecker  # náš listener
+from LangVisitor import LangVisitor
+from TypeChecker import TypeChecker
 
 def main(argv):
     input_stream = FileStream(argv[1], encoding="utf-8")
@@ -11,14 +12,15 @@ def main(argv):
     parser = LangParser(tokens)
     tree = parser.program()
 
-    walker = ParseTreeWalker()
-    checker = TypeChecker()
-    walker.walk(checker, tree)
+    visitor = TypeChecker()
+    visitor.visit(tree)
 
-    if checker.errors:
-        print("\n".join(checker.errors))
+    if visitor.errors:
+        print("ERRORS:")
+        for e in visitor.errors:
+            print(e)
     else:
-        print("OK!")
+        print("OK")
 
 if __name__ == "__main__":
     main(sys.argv)
