@@ -92,7 +92,7 @@ class TypeChecker(LangVisitor):
        return "int"
     
     def visitNot(self, ctx):
-       value_type = self.visit(ctx.expr)
+       value_type = self.visit(ctx.expr())
        if value_type != "bool":
           self.error(ctx, "Only works with boolean.")
           return "error"
