@@ -49,6 +49,11 @@ class LangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by LangParser#emptyCmd.
+    def visitEmptyCmd(self, ctx:LangParser.EmptyCmdContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by LangParser#parens.
     def visitParens(self, ctx:LangParser.ParensContext):
         return self.visitChildren(ctx)

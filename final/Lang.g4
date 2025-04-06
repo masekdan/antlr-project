@@ -11,6 +11,7 @@ statement
     | '{' statement+ '}'                             # blockExp
     | IF_KEYWORD ( condition ) statement (ELSE_KEYWORD statement)?   # ifElse
     | WHILE_KEYWORD ( condition ) statement                  # whileLoop
+    | ';'                                                    # emptyCmd
     ;
 
 expr: op='-' expr                           # unaryMinus

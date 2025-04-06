@@ -14,7 +14,7 @@ while(a<10) {
  a=a+1;
 }
 
-a=0;
+a=0;;
 
 read b;
 
@@ -22,3 +22,5 @@ while(a<b) {
  write "a=",a,", b=",b;
  a=a+1;
 }
+int c;
+c = 1.1;

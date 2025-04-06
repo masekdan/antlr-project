@@ -80,6 +80,15 @@ class LangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LangParser#emptyCmd.
+    def enterEmptyCmd(self, ctx:LangParser.EmptyCmdContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#emptyCmd.
+    def exitEmptyCmd(self, ctx:LangParser.EmptyCmdContext):
+        pass
+
+
     # Enter a parse tree produced by LangParser#parens.
     def enterParens(self, ctx:LangParser.ParensContext):
         pass
