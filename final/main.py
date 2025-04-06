@@ -15,12 +15,15 @@ def main(argv):
     visitor = TypeChecker()
     visitor.visit(tree)
 
-    if visitor.errors:
-        print("ERRORS:")
-        for e in visitor.errors:
-            print(e)
-    else:
-        print("OK")
+    if parser.getNumberOfSyntaxErrors() == 0:
+        if visitor.errors:
+            print("ERRORS:")
+            for e in visitor.errors:
+                print(e)
+        else:
+            print("OK")
+
+    
 
 if __name__ == "__main__":
     main(sys.argv)
