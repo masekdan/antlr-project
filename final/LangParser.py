@@ -37,15 +37,15 @@ def serializedATN():
         63,61,1,0,0,0,63,64,1,0,0,0,64,70,1,0,0,0,65,66,5,18,0,0,66,67,3,
         6,3,0,67,68,3,2,1,0,68,70,1,0,0,0,69,15,1,0,0,0,69,26,1,0,0,0,69,
         29,1,0,0,0,69,39,1,0,0,0,69,50,1,0,0,0,69,58,1,0,0,0,69,65,1,0,0,
-        0,70,3,1,0,0,0,71,72,6,2,-1,0,72,73,5,24,0,0,73,90,3,4,2,14,74,75,
-        5,3,0,0,75,90,3,4,2,13,76,90,5,32,0,0,77,90,5,34,0,0,78,90,5,33,
+        0,70,3,1,0,0,0,71,72,6,2,-1,0,72,73,5,24,0,0,73,90,3,4,2,17,74,75,
+        5,3,0,0,75,90,3,4,2,16,76,90,5,32,0,0,77,90,5,34,0,0,78,90,5,33,
         0,0,79,90,5,5,0,0,80,90,5,6,0,0,81,90,5,36,0,0,82,83,5,7,0,0,83,
         84,3,4,2,0,84,85,5,8,0,0,85,90,1,0,0,0,86,87,5,32,0,0,87,88,5,9,
         0,0,88,90,3,4,2,1,89,71,1,0,0,0,89,74,1,0,0,0,89,76,1,0,0,0,89,77,
         1,0,0,0,89,78,1,0,0,0,89,79,1,0,0,0,89,80,1,0,0,0,89,81,1,0,0,0,
-        89,82,1,0,0,0,89,86,1,0,0,0,90,114,1,0,0,0,91,92,10,17,0,0,92,93,
-        7,0,0,0,93,113,3,4,2,18,94,95,10,16,0,0,95,96,7,1,0,0,96,113,3,4,
-        2,17,97,98,10,15,0,0,98,99,5,25,0,0,99,113,3,4,2,16,100,101,10,12,
+        89,82,1,0,0,0,89,86,1,0,0,0,90,114,1,0,0,0,91,92,10,15,0,0,92,93,
+        7,0,0,0,93,113,3,4,2,16,94,95,10,14,0,0,95,96,7,1,0,0,96,113,3,4,
+        2,15,97,98,10,13,0,0,98,99,5,25,0,0,99,113,3,4,2,14,100,101,10,12,
         0,0,101,102,5,4,0,0,102,113,3,4,2,13,103,104,10,11,0,0,104,105,7,
         2,0,0,105,113,3,4,2,12,106,107,10,10,0,0,107,108,7,3,0,0,108,113,
         3,4,2,11,109,110,10,9,0,0,110,111,7,4,0,0,111,113,3,4,2,10,112,91,
@@ -1107,7 +1107,7 @@ class LangParser ( Parser ):
                 self.state = 72
                 localctx.op = self.match(LangParser.SUB)
                 self.state = 73
-                self.expr(14)
+                self.expr(17)
                 pass
 
             elif la_ == 2:
@@ -1117,7 +1117,7 @@ class LangParser ( Parser ):
                 self.state = 74
                 localctx.op = self.match(LangParser.T__2)
                 self.state = 75
-                self.expr(13)
+                self.expr(16)
                 pass
 
             elif la_ == 3:
@@ -1209,9 +1209,9 @@ class LangParser ( Parser ):
                         localctx = LangParser.MulDivContext(self, LangParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 91
-                        if not self.precpred(self._ctx, 17):
+                        if not self.precpred(self._ctx, 15):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 17)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
                         self.state = 92
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
@@ -1221,16 +1221,16 @@ class LangParser ( Parser ):
                             self._errHandler.reportMatch(self)
                             self.consume()
                         self.state = 93
-                        self.expr(18)
+                        self.expr(16)
                         pass
 
                     elif la_ == 2:
                         localctx = LangParser.AddSubContext(self, LangParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 94
-                        if not self.precpred(self._ctx, 16):
+                        if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 16)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
                         self.state = 95
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
@@ -1240,20 +1240,20 @@ class LangParser ( Parser ):
                             self._errHandler.reportMatch(self)
                             self.consume()
                         self.state = 96
-                        self.expr(17)
+                        self.expr(15)
                         pass
 
                     elif la_ == 3:
                         localctx = LangParser.ModuloContext(self, LangParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 97
-                        if not self.precpred(self._ctx, 15):
+                        if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
                         self.state = 98
                         localctx.op = self.match(LangParser.MOD)
                         self.state = 99
-                        self.expr(16)
+                        self.expr(14)
                         pass
 
                     elif la_ == 4:
@@ -1481,15 +1481,15 @@ class LangParser ( Parser ):
 
     def expr_sempred(self, localctx:ExprContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 17)
+                return self.precpred(self._ctx, 15)
          
 
             if predIndex == 1:
-                return self.precpred(self._ctx, 16)
+                return self.precpred(self._ctx, 14)
          
 
             if predIndex == 2:
-                return self.precpred(self._ctx, 15)
+                return self.precpred(self._ctx, 13)
          
 
             if predIndex == 3:

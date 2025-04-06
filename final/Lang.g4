@@ -13,11 +13,11 @@ statement
     | WHILE_KEYWORD ( condition ) statement                  # whileLoop
     ;
 
-expr: expr op=(MUL|DIV) expr                # mulDiv
+expr: op='-' expr                           # unaryMinus
+    | op='!' expr                           # not
+    | expr op=(MUL|DIV) expr                # mulDiv
     | expr op=(ADD|SUB) expr                # addSub
     | expr op=MOD expr                    # modulo
-    | op='-' expr                           # unaryMinus
-    | op='!' expr                           # not
     | expr op='.' expr                      # concat
     | expr op=(GT|LT) expr                  # relational
     | expr op=(EQ|NEQ) expr                 # compare
