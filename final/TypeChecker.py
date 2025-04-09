@@ -101,7 +101,15 @@ class TypeChecker(LangVisitor):
           return "error"
        return "bool"
     
-    def visitLogic(self, ctx):
+    def visitLogicAnd(self, ctx):
+       left = self.visit(ctx.expr(0))
+       right = self.visit(ctx.expr(1))
+       if left != "bool" or right != "bool":
+          self.error(ctx,"Logic operators only works with boolean.")
+          return "error"
+       return "bool"
+    
+    def visitLogicOr(self, ctx):
        left = self.visit(ctx.expr(0))
        right = self.visit(ctx.expr(1))
        if left != "bool" or right != "bool":
@@ -110,9 +118,19 @@ class TypeChecker(LangVisitor):
        return "bool"
     
     def visitCompare(self, ctx):
+       left = self.visit(ctx.expr(0))
+       right = self.visit(ctx.expr(1))
+       if left != right:
+          self.error(ctx,"Cannot compare different types.")
+          return "error"
        return "bool"
     
     def visitRelational(self, ctx):
+       left = self.visit(ctx.expr(0))
+       right = self.visit(ctx.expr(1))
+       if left not in ['int','float'] or right not in ['int','float']:
+          self.error(ctx,"Cannot compare different types.")
+          return "error"
        return "bool"
     
     def visitUnaryMinus(self, ctx):

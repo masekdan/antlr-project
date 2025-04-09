@@ -79,6 +79,11 @@ class LangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by LangParser#logicOr.
+    def visitLogicOr(self, ctx:LangParser.LogicOrContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by LangParser#addSub.
     def visitAddSub(self, ctx:LangParser.AddSubContext):
         return self.visitChildren(ctx)
@@ -114,6 +119,11 @@ class LangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by LangParser#logicAnd.
+    def visitLogicAnd(self, ctx:LangParser.LogicAndContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by LangParser#unaryMinus.
     def visitUnaryMinus(self, ctx:LangParser.UnaryMinusContext):
         return self.visitChildren(ctx)
@@ -126,11 +136,6 @@ class LangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by LangParser#id.
     def visitId(self, ctx:LangParser.IdContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by LangParser#logic.
-    def visitLogic(self, ctx:LangParser.LogicContext):
         return self.visitChildren(ctx)
 
 

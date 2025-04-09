@@ -7,6 +7,7 @@ class InstructionGenerator(LangVisitor):
         self.symbol_table = table
         self.labels = 0
         self.file = file
+        self.multiAssing = False
 
     def getExprType(self, expr_ctx):
         import io
@@ -20,6 +21,11 @@ class InstructionGenerator(LangVisitor):
         val = ctx.getText()
         self.file.write(f"push I {val}\n")
         return "int"
+    
+    def visitId(self, ctx):
+        name = ctx.IDENTIFIER().getText()
+        self.file.write(f"load {name}\n")
+        return self.symbol_table[name]
     
     def visitFloat(self, ctx):
         val = ctx.getText()
@@ -46,16 +52,32 @@ class InstructionGenerator(LangVisitor):
             if var_type == "I":
                 self.file.write(f"push I 0\n")
             elif var_type == "F":
-                self.file.write(f"push I 0.0\n")
+                self.file.write(f"push F 0.0\n")
             elif var_type == "S":
                 self.file.write(f'push S ""\n')
             elif var_type == "B":
                 self.file.write(f"push B false\n")
-            self.file.write(f"save {name}")
+            self.file.write(f"save {name}\n")
         
     def visitAssignment(self, ctx):
         var_name = ctx.IDENTIFIER().getText()
-        self.file.write("assign\n")
+
+        outer = self.multiAssing
+        self.multiAssing = True
+
+        type = self.visit(ctx.expr())
+
+        self.multiAssing = outer
+
+        if self.symbol_table[var_name] == "float" and type == "int":
+            self.file.write("itof\n")
+        self.file.write(f"save {var_name}\n")
+        self.file.write(f"load {var_name}\n")
+
+        if not self.multiAssing:
+            self.file.write(f"pop\n")
+        
+        return self.symbol_table[var_name]
 
     def visitIfElse(self, ctx):
         lbl1 = self.labels
@@ -93,6 +115,13 @@ class InstructionGenerator(LangVisitor):
           vals = vals+1
         self.file.write(f"print {vals}\n")
     
+    def visitReadExp(self, ctx):
+        for id in ctx.IDENTIFIER():
+            type = self.symbol_table[id.getText()]
+            name = id.getText()
+            self.file.write(f"read {type[0].upper()}\n")
+            self.file.write(f"save {name}\n")
+    
     def visitConcat(self, ctx):
         self.visit(ctx.expr(0))
         self.visit(ctx.expr(1))
@@ -104,14 +133,21 @@ class InstructionGenerator(LangVisitor):
         self.file.write(f"uminus {type[0].upper()}\n")
         return type
     
-    def visitLogic(self, ctx):
-        op = ctx.getChild(1).getText()
+    def visitNot(self, ctx):
+        self.visit(ctx.expr())
+        self.file.write(f"not\n")
+        return "bool"
+    
+    def visitLogicAnd(self, ctx):
         self.visit(ctx.expr(0))
         self.visit(ctx.expr(1))
-        if op == "||":
-            self.file.write("or\n")
-        else:
-            self.file.write("and\n")
+        self.file.write("and\n")
+        return "bool"
+    
+    def visitLogicOr(self, ctx):
+        self.visit(ctx.expr(0))
+        self.visit(ctx.expr(1))
+        self.file.write("or\n")
         return "bool"
     
     def visitMulDiv(self, ctx):
@@ -210,7 +246,17 @@ class InstructionGenerator(LangVisitor):
         else:
             self.file.write(f"{'lt' if op == '<' else 'gt'} F\n")
         
-        return result_type
+        return "bool"
+    
+    def visitCompare(self, ctx):
+        op = ctx.getChild(1).getText()
+        left = self.visit(ctx.expr(0))
+        right = self.visit(ctx.expr(1))
+
+        self.file.write(f"eq {left[0].upper()}\n")
+        if op == "!=":
+            self.file.write(f"not\n")
+        return "bool"
 
     def visitBlockExp(self, ctx):
         for stmt in ctx.statement():

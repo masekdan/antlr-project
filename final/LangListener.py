@@ -134,6 +134,15 @@ class LangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LangParser#logicOr.
+    def enterLogicOr(self, ctx:LangParser.LogicOrContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#logicOr.
+    def exitLogicOr(self, ctx:LangParser.LogicOrContext):
+        pass
+
+
     # Enter a parse tree produced by LangParser#addSub.
     def enterAddSub(self, ctx:LangParser.AddSubContext):
         pass
@@ -197,6 +206,15 @@ class LangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LangParser#logicAnd.
+    def enterLogicAnd(self, ctx:LangParser.LogicAndContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#logicAnd.
+    def exitLogicAnd(self, ctx:LangParser.LogicAndContext):
+        pass
+
+
     # Enter a parse tree produced by LangParser#unaryMinus.
     def enterUnaryMinus(self, ctx:LangParser.UnaryMinusContext):
         pass
@@ -221,15 +239,6 @@ class LangListener(ParseTreeListener):
 
     # Exit a parse tree produced by LangParser#id.
     def exitId(self, ctx:LangParser.IdContext):
-        pass
-
-
-    # Enter a parse tree produced by LangParser#logic.
-    def enterLogic(self, ctx:LangParser.LogicContext):
-        pass
-
-    # Exit a parse tree produced by LangParser#logic.
-    def exitLogic(self, ctx:LangParser.LogicContext):
         pass
 
 

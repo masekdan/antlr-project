@@ -4,25 +4,26 @@
 program: statement+ ;
 
 statement
-    : primitiveType IDENTIFIER (',' IDENTIFIER)* ';' # declaration // var declaration
-    | expr ';'                                       # printExpr
-    | READ_KEYWORD IDENTIFIER (',' IDENTIFIER)* ';'          # readExp
-    | WRITE_KEYWORD expr (',' expr)* ';'                     # writeExp
-    | '{' statement+ '}'                             # blockExp
-    | IF_KEYWORD ( condition ) statement (ELSE_KEYWORD statement)?   # ifElse
-    | WHILE_KEYWORD ( condition ) statement                  # whileLoop
-    | ';'                                                    # emptyCmd
+    : primitiveType IDENTIFIER (',' IDENTIFIER)* ';'                # declaration // var declaration
+    | expr ';'                                                      # printExpr
+    | READ_KEYWORD IDENTIFIER (',' IDENTIFIER)* ';'                 # readExp
+    | WRITE_KEYWORD expr (',' expr)* ';'                            # writeExp
+    | '{' statement+ '}'                                            # blockExp
+    | IF_KEYWORD ( condition ) statement (ELSE_KEYWORD statement)?  # ifElse
+    | WHILE_KEYWORD ( condition ) statement                         # whileLoop
+    | ';'                                                           # emptyCmd
     ;
 
 expr: op='-' expr                           # unaryMinus
     | op='!' expr                           # not
     | expr op=(MUL|DIV) expr                # mulDiv
     | expr op=(ADD|SUB) expr                # addSub
-    | expr op=MOD expr                    # modulo
+    | expr op=MOD expr                      # modulo
     | expr op='.' expr                      # concat
     | expr op=(GT|LT) expr                  # relational
     | expr op=(EQ|NEQ) expr                 # compare
-    | expr op=(AND|OR) expr                 # logic
+    | expr op=AND expr                      # logicAnd
+    | expr op=OR expr                       # logicOr
     | IDENTIFIER                            # id
     | INT                                   # int
     | FLOAT                                 # float
