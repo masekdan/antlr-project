@@ -1,4 +1,4 @@
-1<5?7:9;
-"bool"?7:5;
-true?"atx":9;
-false?7:9.5;
+if (3<4) write "condition was true";
+else write "condition was false";
+
+while (false) write "juj";
