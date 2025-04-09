@@ -139,6 +139,11 @@ class LangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by LangParser#ternary.
+    def visitTernary(self, ctx:LangParser.TernaryContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by LangParser#condition.
     def visitCondition(self, ctx:LangParser.ConditionContext):
         return self.visitChildren(ctx)

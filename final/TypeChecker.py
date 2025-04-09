@@ -4,7 +4,7 @@ from LangVisitor import LangVisitor
 class TypeChecker(LangVisitor):
 
     def __init__(self):
-      self.symbol_table = {} # typ , jmeno
+      self.symbol_table = {} # jmeno , typ
       self.errors = []
     
     def error(self, ctx, message):
@@ -33,8 +33,8 @@ class TypeChecker(LangVisitor):
            self.error(ctx,f"Undeclared variable '{var_name}'.")
         else:
            var_type = self.symbol_table[var_name]
-           if var_type == expr_type or (var_type == "float" and expr_type == "int"):
-              return var_type
+           if var_type == expr_type or (var_type == "float" and expr_type == "int"):   #itof
+               return var_type
            else:
               self.error(ctx, f"Cannot convert '{expr_type}' to '{var_type}'.")
               return "error"
@@ -47,9 +47,11 @@ class TypeChecker(LangVisitor):
        return self.symbol_table[name]
     
     def visitInt(self, ctx):
+       val = ctx.getText()
        return "int"
     
     def visitFloat(self, ctx):
+       val = ctx.getText()
        return "float"
     
     def visitBoolTrue(self, ctx):
@@ -59,6 +61,7 @@ class TypeChecker(LangVisitor):
        return "bool"
     
     def visitString(self, ctx):
+       val = ctx.getText()
        return "string"
 
     def visitAddSub(self, ctx):
@@ -160,4 +163,25 @@ class TypeChecker(LangVisitor):
     def visitWriteExp(self, ctx):
        for e in ctx.expr():
           self.visit(e)
+
+    def visitTernary(self, ctx):
+         cond_type = self.visit(ctx.expr(0))
+         left = self.visit(ctx.expr(1))
+         right = self.visit(ctx.expr(2))
+
+         if cond_type != 'bool':
+            self.error(ctx,"Condidtion must be bool.")
+            return "error"
+         
+         if right=="string" and left == "string":
+            return "string"
+         elif right=="bool" and left == "bool":
+            return "string"
+         elif "float" in (left,right):
+            return "float"
+         elif right == "int" and left == "int":
+            return "int"
+         else:
+            self.error(ctx,"Expressions are not the same type")
+            return "error"
           

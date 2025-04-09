@@ -242,6 +242,15 @@ class LangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LangParser#ternary.
+    def enterTernary(self, ctx:LangParser.TernaryContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#ternary.
+    def exitTernary(self, ctx:LangParser.TernaryContext):
+        pass
+
+
     # Enter a parse tree produced by LangParser#condition.
     def enterCondition(self, ctx:LangParser.ConditionContext):
         pass

@@ -30,9 +30,10 @@ expr: op='-' expr                           # unaryMinus
     | 'false'                               # boolFalse
     | STRING                                # string
     | '(' expr ')'                          # parens
+    | expr '?' expr op=':' expr             # ternary
     | <assoc=right> IDENTIFIER '=' expr     # assignment
     ;
-
+    
 condition
     : expr
     ;

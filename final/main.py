@@ -4,6 +4,7 @@ from LangLexer import LangLexer
 from LangParser import LangParser
 from LangVisitor import LangVisitor
 from TypeChecker import TypeChecker
+from InstructionGenerator import InstructionGenerator
 
 def main(argv):
     input_stream = FileStream(argv[1], encoding="utf-8")
@@ -21,9 +22,8 @@ def main(argv):
             for e in visitor.errors:
                 print(e)
         else:
-            print("OK")
-
-    
+            generator = InstructionGenerator(visitor.symbol_table)
+            generator.visit(tree)
 
 if __name__ == "__main__":
     main(sys.argv)
