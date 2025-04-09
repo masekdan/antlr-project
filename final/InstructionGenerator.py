@@ -7,6 +7,14 @@ class InstructionGenerator(LangVisitor):
         self.symbol_table = table
         self.labels = 0
         self.file = file
+
+    def getExprType(self, expr_ctx):
+        import io
+        orig_file = self.file
+        self.file = io.StringIO()
+        result_type = self.visit(expr_ctx)
+        self.file = orig_file
+        return result_type
     
     def visitInt(self, ctx):
         val = ctx.getText()
@@ -108,27 +116,63 @@ class InstructionGenerator(LangVisitor):
     
     def visitMulDiv(self, ctx):
         op = ctx.getChild(1).getText()
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
+        left_ctx = ctx.expr(0)
+        right_ctx = ctx.expr(1)
 
-        if left == "int" and right == "int":
-            if op == "*":
-                self.file.write("mul I\n")
-            else:
-                self.file.write("div I\n")
-        
-        elif left == "float" and right == "float":
-            if op == "*":
-                self.file.write("mul F\n")
-            else:
-                self.file.write("div F\n")
-        
-        elif left == "float" and right == "int":
+        left_type = self.getExprType(left_ctx)
+        right_type = self.getExprType(right_ctx)
+
+        if left_type == "int" and right_type == "float":
+            self.visit(left_ctx)
             self.file.write("itof\n")
-            if op == "*":
-                self.file.write("mul F\n")
-            else:
-                self.file.write("div F\n")
+            self.visit(right_ctx)
+            result_type = "float"
+        elif left_type == "float" and right_type == "int":
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            self.file.write("itof\n")
+            result_type = "float"
+        else:
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            result_type = "float" if "float" in (left_type, right_type) else "int"
+
+        if result_type == "int":
+            self.file.write(f"{'mul' if op == '*' else 'div'} I\n")
+        else:
+            self.file.write(f"{'mul' if op == '*' else 'div'} F\n")
+    
+        return result_type
+    
+    def visitAddSub(self, ctx):
+        op = ctx.getChild(1).getText()
+        left_ctx = ctx.expr(0)
+        right_ctx = ctx.expr(1)
+
+        left_type = self.getExprType(left_ctx)
+        right_type = self.getExprType(right_ctx)
+
+        if left_type == "int" and right_type == "float":
+            self.visit(left_ctx)
+            self.file.write("itof\n")
+            self.visit(right_ctx)
+            result_type = "float"
+        elif left_type == "float" and right_type == "int":
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            self.file.write("itof\n")
+            result_type = "float"
+        else:
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            result_type = "float" if "float" in (left_type, right_type) else "int"
+
+        if result_type == "int":
+            self.file.write(f"{'add' if op == '+' else 'sub'} I\n")
+        else:
+            self.file.write(f"{'add' if op == '+' else 'sub'} F\n")
+    
+        return result_type
     
     def visitModulo(self, ctx):
         self.visit(ctx.expr(0))
@@ -139,19 +183,34 @@ class InstructionGenerator(LangVisitor):
 
     def visitRelational(self, ctx):
         op = ctx.getChild(1).getText()
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
-        if left == "int" and right == "int":
-            if op == '>':
-                self.file.write("gt I\n")
-            else:
-                self.file.write("lt I\n")
+        left_ctx = ctx.expr(0)
+        right_ctx = ctx.expr(1)
 
-        if left == "float" and right == "float":
-            if op == '>':
-                self.file.write("gt F\n")
-            else:
-                self.file.write("lt F\n")
+        left_type = self.getExprType(left_ctx)
+        right_type = self.getExprType(right_ctx)
+
+        if left_type == "int" and right_type == "float":
+            self.visit(left_ctx)
+            self.file.write("itof\n")
+            self.visit(right_ctx)
+            result_type = "float"
+        elif left_type == "float" and right_type == "int":
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            self.file.write("itof\n")
+            result_type = "float"
+        else:
+            self.visit(left_ctx)
+            self.visit(right_ctx)
+            result_type = "float" if "float" in (left_type, right_type) else "int"
+        
+        if result_type == "int":
+            self.file.write(f"{'lt' if op == '<' else 'gt'} I\n")
+        
+        else:
+            self.file.write(f"{'lt' if op == '<' else 'gt'} F\n")
+        
+        return result_type
 
     def visitBlockExp(self, ctx):
         for stmt in ctx.statement():
