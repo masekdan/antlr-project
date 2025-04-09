@@ -5,6 +5,7 @@ from LangParser import LangParser
 from LangVisitor import LangVisitor
 from TypeChecker import TypeChecker
 from InstructionGenerator import InstructionGenerator
+from VirtualMachine import VirtualMachine
 
 def main(argv):
     input_stream = FileStream(argv[1], encoding="utf-8")
@@ -26,6 +27,11 @@ def main(argv):
             generator = InstructionGenerator(visitor.symbol_table,file)
             generator.visit(tree)
             file.close()
+
+            file1 = open("ot.txt","r")
+            machine = VirtualMachine(file1)
+            machine.eval()
+            file1.close()
 
 if __name__ == "__main__":
     main(sys.argv)
