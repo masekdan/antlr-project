@@ -22,8 +22,10 @@ def main(argv):
             for e in visitor.errors:
                 print(e)
         else:
-            generator = InstructionGenerator(visitor.symbol_table)
+            file = open("ot.txt","w")
+            generator = InstructionGenerator(visitor.symbol_table,file)
             generator.visit(tree)
+            file.close()
 
 if __name__ == "__main__":
     main(sys.argv)

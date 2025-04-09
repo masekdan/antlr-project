@@ -1,4 +1,8 @@
 if (3<4) write "condition was true";
 else write "condition was false";
 
-while (false) write "juj";
+while (false) 
+{
+write "juj";
+write "omg to chci domu";
+}
