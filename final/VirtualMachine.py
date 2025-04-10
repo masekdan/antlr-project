@@ -8,8 +8,13 @@ class VirtualMachine():
         self.memory = {}
         self.IP = 0
 
+        i = 0
         for line in self.file:
+            ins = line.split()
+            if ins[0] == "label":
+                self.labels[ins[1]] = i
             self.instructions.append(line.strip())
+            i+=1
     
     def add(self,T):
         if T == "I":
@@ -105,20 +110,34 @@ class VirtualMachine():
         pass
 
     def jmp(self,n):
-        self.IP = n
+        self.IP = int(self.labels[n])
 
     def fjmp(self,n):
-        self.IP = n
+        condition = self.stack.pop()
+        if not condition:
+            self.IP = int(self.labels[n])
 
     def printIns(self,n):
-        pass
+        for i in range(int(n)):
+            print(self.stack[::-1][i])
 
     def readIns(self,T):
-        pass
+        val = input()
+        if T == "I":
+            self.stack.append(int(val))
+        elif T == "F":
+            self.stack.append(float(val))
+        elif T == "S":
+            self.stack.append(str(val))
+        else:
+            if val == "true":
+                self.stack.append(bool(True))
+            else:
+                self.stack.append(bool(False))
 
     def eval(self):
-        for i in range(len(self.instructions)):
-            line = self.instructions[i].split()
+        while self.IP < len(self.instructions):
+            line = self.instructions[self.IP].split()
             instruction = line[0]
             if instruction=="push":
                 if line[1]=="S":
@@ -174,6 +193,5 @@ class VirtualMachine():
                 self.readIns(line[1])
             
             self.IP += 1
-            i = self.IP 
         
         print(self.stack)
