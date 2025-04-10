@@ -117,8 +117,8 @@ class VirtualMachine():
         pass
 
     def eval(self):
-        for ins in self.instructions:
-            line = ins.split()
+        for i in range(len(self.instructions)):
+            line = self.instructions[i].split()
             instruction = line[0]
             if instruction=="push":
                 if line[1]=="S":
@@ -144,5 +144,36 @@ class VirtualMachine():
                 self.uminus(line[1])
             elif instruction=="concat":
                 self.concat()
+            elif instruction=="and":
+                self.andIns()
+            elif instruction=="or":
+                self.orIns()
+            elif instruction=="gt":
+                self.gt(line[1])
+            elif instruction=="lt":
+                self.lt(line[1])
+            elif instruction=="eq":
+                self.eq(line[1])
+            elif instruction=="not":
+                self.notIns()
+            elif instruction=="itof":
+                self.itof()
+            elif instruction=="load":
+                self.loadIns(line[1])
+            elif instruction=="save":
+                self.saveIns(line[1])
+            elif instruction=="label":
+                pass
+            elif instruction=="jmp":
+                self.jmp(line[1])
+            elif instruction=="fjmp":
+                self.fjmp(line[1])
+            elif instruction=="print":
+                self.printIns(line[1])
+            elif instruction=="read":
+                self.readIns(line[1])
+            
+            self.IP += 1
+            i = self.IP 
         
         print(self.stack)
