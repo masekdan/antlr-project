@@ -90,7 +90,7 @@ class VirtualMachine():
         elif T == "F":
             self.stack.append(float(x))
         elif T == "S":
-            self.stack.append(x[1:-1])
+            self.stack.append(x)
         elif T == "B":
             if x == "true":
                 self.stack.append(bool(True))
@@ -140,13 +140,7 @@ class VirtualMachine():
             line = self.instructions[self.IP].split()
             instruction = line[0]
             if instruction=="push":
-                if line[1]=="S":
-                    string = ""
-                    for i in (2,len(line)-1):
-                        string = string+line[i]
-                    self.pushIns(line[1],string)
-                else:
-                    self.pushIns(line[1],line[2])
+                self.pushIns(line[1],line[2])
             elif instruction=="pop":
                 self.popIns()
             elif instruction=="add":
