@@ -1,3 +1,4 @@
+import shlex
 
 class VirtualMachine():
     def __init__(self,file):
@@ -137,7 +138,7 @@ class VirtualMachine():
 
     def eval(self):
         while self.IP < len(self.instructions):
-            line = self.instructions[self.IP].split()
+            line = shlex.split(self.instructions[self.IP])
             instruction = line[0]
             if instruction=="push":
                 self.pushIns(line[1],line[2])
@@ -188,4 +189,4 @@ class VirtualMachine():
             
             self.IP += 1
         
-        print(self.stack)
+        #print(self.stack)

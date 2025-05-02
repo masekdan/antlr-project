@@ -106,6 +106,22 @@ class InstructionGenerator(LangVisitor):
         self.visit(ctx.statement())
         self.file.write(f"jmp {lbl1}\n")
         self.file.write(f"label {lbl2}\n")
+    
+    def visitForLoop(self, ctx):
+        self.visit(ctx.expr(0))
+        
+        lbl1 = self.labels
+        self.labels += 1
+        lbl2 = self.labels
+        self.labels += 1
+
+        self.file.write(f"label {lbl1}\n")
+        self.visit(ctx.expr(1))
+        self.file.write(f"fjmp {lbl2}\n")
+        self.visit(ctx.statement())
+        self.visit(ctx.expr(2))
+        self.file.write(f"jmp {lbl1}\n")
+        self.file.write(f"label {lbl2}\n")
         
     
     def visitWriteExp(self, ctx):

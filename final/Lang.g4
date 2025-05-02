@@ -11,6 +11,7 @@ statement
     | '{' statement+ '}'                                            # blockExp
     | IF_KEYWORD ( condition ) statement (ELSE_KEYWORD statement)?  # ifElse
     | WHILE_KEYWORD ( condition ) statement                         # whileLoop
+    | FOR_KEYWORD '(' expr ';' expr ';' expr ')' statement                # forLoop
     | ';'                                                           # emptyCmd
     ;
 
@@ -51,6 +52,7 @@ INT_KEYWORD : 'int';
 FLOAT_KEYWORD : 'float';
 BOOL_KEYWORD : 'bool';
 STRING_KEYWORD : 'string';
+FOR_KEYWORD : 'for';
 
 READ_KEYWORD : 'read';
 WRITE_KEYWORD : 'write';

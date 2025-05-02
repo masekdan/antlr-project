@@ -80,6 +80,15 @@ class LangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LangParser#forLoop.
+    def enterForLoop(self, ctx:LangParser.ForLoopContext):
+        pass
+
+    # Exit a parse tree produced by LangParser#forLoop.
+    def exitForLoop(self, ctx:LangParser.ForLoopContext):
+        pass
+
+
     # Enter a parse tree produced by LangParser#emptyCmd.
     def enterEmptyCmd(self, ctx:LangParser.EmptyCmdContext):
         pass

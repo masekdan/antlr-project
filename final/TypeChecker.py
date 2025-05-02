@@ -164,6 +164,13 @@ class TypeChecker(LangVisitor):
         if cond_type != "bool":
           self.error(ctx, "Condition must be boolean type.")
         self.visit(ctx.statement())
+      
+   
+    def visitForLoop(self, ctx):
+       cond_type = self.visit(ctx.expr(1))
+       if cond_type != "bool":
+          self.error(ctx, "Second expression must be boolean.")
+       self.visit(ctx.statement())
 
     def visitPrintExpr(self, ctx):
        self.visit(ctx.expr())
